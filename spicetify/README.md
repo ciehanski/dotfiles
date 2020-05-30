@@ -1,5 +1,7 @@
 # spicetify-cli
 
+![ciehanski's spotify screenshot](https://github.com/ciehanski/dotfiles/blob/master/spicetify/screenshot.png?raw=true)
+
 ## Installation
 
 ***Run after `brew bundle install` and [symlinking](https://github.com/ciehanski/dotfiles#installation)***

@@ -71,6 +71,7 @@ set inccommand=split              " enables interactive search and replace
 set showcmd
 set wildmenu                      " turn on the wild menu
 set wildmode=list:longest,full    " set command-line completion mode
+set cmdheight=2                   " Set cmdheight 1u higher due to tmux statusline
 " set spell spelllang=en_us
 " set spellfile=~/.config/nvim/spell/en.utf-8.add
 

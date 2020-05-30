@@ -2,4 +2,4 @@
 
 ## Installation
 
-Run `Ctrl-B I` to install tmux plugins.
+Run `Ctrl-B + I` or `<tmux-prefix> + I` to install tmux plugins.

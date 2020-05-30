@@ -1,5 +1,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/Ryan/.oh-my-zsh"
+
+# Add macOS local/sbin to path
 export PATH="/usr/local/sbin:$PATH"
 
 # Set lang

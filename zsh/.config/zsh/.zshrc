@@ -39,23 +39,23 @@ bindkey -v "^?" backward-delete-char
 # Aliases
 alias ..="cd .." 
 alias ...="cd ../.."
+alias ....="cd ../../.."
 alias vim="nvim"
 alias cls="clear"
+# tmux
 alias tls="tmux ls"
 alias td="tmux detach"
+tn () { tmux new -s $1 ; }
+tk () { tmux kill-session -t $1 ; }
+# git aliases
 alias gs="git status"
+gdc () { git commit --dry-run -S -m $1 ; }
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# ZSH Options
 ZSH_THEME="powerlevel10k/powerlevel10k"
 DISABLE_AUTO_TITLE="true"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -73,16 +73,16 @@ plugins=(
   git-extras
   vi-mode
   web-search
-  zsh-apple-touchbar
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
 
 # Source FZF
-source ~/.fzf
+source ~/.config/fzf/.fzf
 
 # Source oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# Possibly change to $ZDOTDIR/.p10k.zsh
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh

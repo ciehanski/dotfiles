@@ -19,18 +19,18 @@ First, clone this repository like so:
 $ git clone --recurse-submodules https://github.com/ciehanski/dotfiles ~/.dotfiles
 ```
 
-Next, we'll create the needed symlinks. I personally use GNU [`stow`](https://www.gnu.org/software/stow/) for this. Run the following command for each folder within this repository:
+Next, let's install the necessary [Brew](https://brew.sh/) packages:
+
+```bash
+$ cd ~/.dotfiles
+$ brew bundle install
+```
+
+Now, we'll create the needed symlinks. I personally use GNU [`stow`](https://www.gnu.org/software/stow/) for this. Run the following command for each folder within this repository:
 
 ```bash
 $ cd ~/.dotfiles
 $ stow -vt ~ alacritty
 $ stow -vt ~ coc
 ...
-```
-
-Now, let's install the necessary [Brew](https://brew.sh/) packages:
-
-```bash
-$ cd ~/.dotfiles
-$ brew bundle install
 ```

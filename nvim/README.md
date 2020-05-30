@@ -7,3 +7,5 @@
 ```bash
 nvim +PlugInstall
 ```
+
+Restart `nvim` and you should be set.

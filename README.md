@@ -9,6 +9,8 @@
 - Shortcuts: [`skhd`](https://github.com/koekeishiya/skhd)
 - Editor: [`nvim`](https://github.com/neovim/neovim)
 
+![ciehanski's dotfiles screenshot](https://github.com/ciehanski/dotfiles/screenshot.png?raw=true)
+
 ## Installation:
 
 First, clone this repository like so:

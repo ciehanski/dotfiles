@@ -5,7 +5,7 @@
 **Run after `brew bundle install`**
 
 ```bash
-spicetify
-spicetify backup apply enable-devtool
-spicetify update
+$ spicetify
+$ spicetify backup apply enable-devtool
+$ spicetify update
 ```

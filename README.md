@@ -2,8 +2,8 @@
 
 - Terminal: [`alacritty`](https://github.com/alacritty/alacritty)
 - Shell: [`zsh`](https://www.zsh.org/)
-        - [`ohmyzsh`](https://github.com/ohmyzsh/ohmyzsh)
-        - [`p10k`](https://github.com/romkatv/powerlevel10k)
+  - [`ohmyzsh`](https://github.com/ohmyzsh/ohmyzsh)
+  - [`p10k`](https://github.com/romkatv/powerlevel10k)
 - Multiplexer: [`tmux`](https://github.com/tmux/tmux)
 - Window Manager: [`yabai`](https://github.com/koekeishiya/yabai)
 - Shortcuts: [`skhd`](https://github.com/koekeishiya/skhd)

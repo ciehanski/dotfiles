@@ -57,6 +57,7 @@ yabai -m rule --add app="^1Password 7$" manage=off
 yabai -m rule --add app="^Bitwarden$" manage=off
 yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^Activity Monitor$" manage=off
 
 # browsing - 1
 yabai -m rule --add app="^Safari$" space=^1
@@ -75,14 +76,14 @@ yabai -m rule --add app="^FaceTime$" space=^3 manage=off
 yabai -m rule --add app="^Slack$" space=^3
 yabai -m rule --add app="^Mail$" space=^3
 
-# tools - 4
-yabai -m rule --add app="^ProtonMail Bridge$" space=^4 manage=off
+# music / notes / photos - 4
 yabai -m rule --add app="^Bear$" space=^4
-yabai -m rule --add app="^App Store$" space=^4 manage=off
-yabai -m rule --add app="^Activity Monitor$" space=^4 manage=off
 yabai -m rule --add app="^Music$" space=^4
 yabai -m rule --add app="^Spotify$" space=^4
-yabai -m rule --add app="^Docker$" space=^4 manage=off
+yabai -m rule --add app="^Photos$" space=^4
 
-# Backups
+# tools - 5 
 yabai -m rule --add app="^Arq$" space=^5
+yabai -m rule --add app="^ProtonMail Bridge$" space=^4 manage=off
+yabai -m rule --add app="^App Store$" space=^4 manage=off
+yabai -m rule --add app="^Docker$" space=^4 manage=off

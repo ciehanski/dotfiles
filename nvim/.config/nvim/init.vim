@@ -13,15 +13,17 @@ Plug 'mhinz/vim-signify'                       " Code dif
 Plug 'scrooloose/nerdtree'                     " File explorer
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Nerdtree Syntax Highlighting
 Plug 'Xuyuanp/nerdtree-git-plugin'             " Show files modified since last commit
-Plug 'tpope/vim-fugitive'                      " Git Goodies
+Plug 'tpope/vim-fugitive'                      " Git goodies
 Plug 'sheerun/vim-polyglot'                    " Base language support
 Plug 'vim-airline/vim-airline'                 " Airline
 Plug 'jiangmiao/auto-pairs'                    " Auto-close brackets, etc.
 Plug 'tpope/vim-surround'                      " More tag closing, etc.
-Plug 'ryanoasis/vim-devicons'                  " Fancy Icons
+Plug 'ryanoasis/vim-devicons'                  " Fancy icons
 Plug 'luochen1990/rainbow'                     " Rainbow brackets (cause I'm a sucker for colors)
 Plug 'christoomey/vim-tmux-navigator'          " Easy tmux navigation
-Plug 'mhinz/vim-startify'                      " Pretty startup page
+Plug 'machakann/vim-highlightedyank'           " Highlight yanked text
+Plug 'junegunn/fzf'                            " fzf vim bindings
+Plug '/usr/local/opt/fzf'                      " Local fzf binary via brew
 
 " Language support
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' } " Go syntax  highlighting & tooling
@@ -32,20 +34,21 @@ Plug 'alx741/vim-hindent'                      " Haskell indenter
 
 " Color Schemes
 Plug 'drewtempelmeyer/palenight.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 call plug#end()
 
 "----------------------------------------------
-" General settings
+" General Settings
 "----------------------------------------------
 set autoindent                    " take indent for new line from previous line
 set smartindent                   " enable smart indentation
 set cindent
 set autoread                      " reload file if the file changes on the disk
 set autowrite                     " write when switching buffers
-set autowriteall                  " write on :quit
+" set autowriteall                " write on :quit
 set clipboard=unnamedplus
-set colorcolumn=81                " highlight the 80th column as an indicator
+set colorcolumn=81                " highlight the 81st column as an indicator
 set cursorline                    " highlight the current line for the cursor
 set encoding=utf-8                " set utf8 encoding
 set expandtab                     " expands tabs to spaces
@@ -58,23 +61,50 @@ set ruler
 set wrap
 set tw=81                         " auto wrap lines that are longer than that
 set linebreak                     " avoid wrapping a line in the middle of a word
-set emoji                         " enable emojis
+set emoji                         " 😜
 set ttyfast                       " fast scrolling
 set t_Co=256                      " 256 true color
 set ignorecase                    " ignore case when searching
 set smartcase                     " when searching try to be smart about cases
 set hlsearch                      " highlight search results
 set incsearch                     " makes search act like search in modern browsers
-set scrolloff=4                   " set scroll offset by # of lines
+set scrolloff=3                   " set scroll offset by # of lines
 set nocompatible
 set inccommand=split              " enables interactive search and replace
 set showcmd
-set wildmenu                      " turn on the wild menu
-set wildmode=list:longest,full    " set command-line completion mode
 set cmdheight=2                   " Set cmdheight 1u higher due to tmux statusline
+set foldmethod=marker             " Fold on marks
+set lazyredraw
 " set spell spelllang=en_us
 " set spellfile=~/.config/nvim/spell/en.utf-8.add
 
+" wildmenu
+set wildmenu                         " turn on the wild menu
+set wildmode=list:longest            " set command-line completion mode
+" wildmenu ignore nasties
+set wildignore=.hg\*,.svn\*,Thumbs.db,*.png,*.gif,*.jpg,*.jpeg,vendor 
+
+" Enable filetype (tabs/spaces/indenting)
+filetype on
+filetype plugin on
+filetype indent on
+
+" Permanent undo
+set undodir=~/.config/nvim/.vimdid
+set undofile
+
+" Get syntax
+syntax enable
+
+" Enable mouse stuff
+set mouse=a
+
+" Set the leader button
+let mapleader = ','
+
+"----------------------------------------------
+" Settings: Binaries
+"----------------------------------------------
 " Set the Python binaries neovim is using. Please note that you will need to
 " install the neovim package for these binaries separately like this for
 " example:
@@ -85,56 +115,30 @@ let g:python3_host_prog = '/usr/bin/python3'
 " Ruby bin
 let g:ruby_host_prog = '~/.rbenv/versions/2.6.3/bin/ruby'
 
-" Allow Vim to set a custom font or color for a word
-syntax enable
-
-" Set the leader button
-let mapleader = ','
-
-" Ignore compiled files
-set wildignore+=.git\*,.hg\*,.svn\*
-
-" Autosave buffers before leaving them
-autocmd BufLeave * silent! :wa
-
-" Avoid window problem with NERDTree + :bd
-nnoremap \d :bp<cr>:bd #<cr>
-
-" Shortcut for GoFmt
-map <leader>gf :GoFmt<cr>
-
-" Enable mouse scrolling in normal mode
-if has('mouse')
-    set mouse=a
-endif
-
-" Enable filetype (tabs/spaces/indenting)
-filetype on
-filetype plugin on
-filetype indent on
-
 "----------------------------------------------
-" Colors
+" Settings: Colors
 "----------------------------------------------
-"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+" Support true color in terminal
+" Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+" (see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
 if (has("nvim"))
   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
-"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+" Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
 " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
 if (has("termguicolors"))
   set termguicolors
 endif
 
+" Theme
 set background=dark                 " for the dark version
 let g:palenight_allow_italics = 1   " italics
 colorscheme palenight 
 
 "----------------------------------------------
-" Searching
+" Remaps: Searching
 "----------------------------------------------
 " Clear search highlights
 map <leader>c :nohlsearch<cr>
@@ -145,24 +149,30 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 "----------------------------------------------
-" Navigation
+" Remaps: Navigation
 "----------------------------------------------
+" Easier insert mode exit
+inoremap ii <esc>
+
+" Easier ESC
+inoremap <C-c> <Esc>
+vnoremap <C-c> <Esc>
+
 " Disable arrow keys
 noremap <Up> <NOP>
 noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
-
-" Easier ESC in Insert mode
-inoremap ii <esc>
+inoremap <Up> <NOP>
+inoremap <Down> <NOP>
+inoremap <Left> <NOP>
+inoremap <Right> <NOP>
 
 " Quickly insert an empty new line without entering insert mode
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
 " Move between buffers with Shift + arrow key...
-nnoremap <S-Left> :bprevious<cr>
-nnoremap <S-Right> :bnext<cr>
+nnoremap <Left> :bp<cr>
+nnoremap <Right> :bn<cr>
 
 " Fix some common typos
 cnoreabbrev W! w!
@@ -177,7 +187,7 @@ cnoreabbrev Q q
 cnoreabbrev Qall qall
 
 "----------------------------------------------
-" Splits
+" Remaps: Splits
 "----------------------------------------------
 " Create horizontal splits below the current window
 set splitbelow
@@ -191,7 +201,7 @@ nnoremap <leader>h :split<cr>
 nnoremap <leader>q :close<cr>
 
 "----------------------------------------------
-" Plugin: Rainbow Brackets
+" Plugin: luochen1990/rainbow
 "----------------------------------------------
 " Set to 0 if you want to enable it later via :RainbowToggle
 let g:rainbow_active = 1
@@ -211,8 +221,9 @@ let g:airline#extensions#tabline#show_tabs = 1
 " Enable powerline fonts.
 let g:airline_powerline_fonts = 1
 
-" Set Airline Theme
+" Set airline color theme
 let g:airline_theme='palenight'
+" let g:airline_theme='dracula'
 
 " Explicitly define some symbols that did not work well for me in Linux.
 if !exists('g:airline_symbols')
@@ -225,7 +236,7 @@ let g:airline_symbols.maxlinenr = ''
 let g:airline#extensions#coc#enabled = 1
 
 "----------------------------------------------
-" Plugin: 'ctrlpvim/ctrlp.vim'
+" Plugin: ctrlpvim/ctrlp.vim
 "----------------------------------------------
 " Note: We are not using CtrlP much in this configuration. But vim-go depend on
 " it to run GoDecls(Dir).
@@ -239,6 +250,9 @@ let g:ctrlp_map = ''
 let g:NERDTreeMinimalUI = v:true
 
 nnoremap <C-n> :NERDTreeToggle<cr>
+
+" Avoid window problem with NERDTree + :bd
+nnoremap \d :bp<cr>:bd #<cr>
 
 " Syntax Highlighting
 let g:NERDTreeFileExtensionHighlightFullName = 1
@@ -266,7 +280,7 @@ let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
 "----------------------------------------------
-" Plugin: coc.nvim
+" Plugin: neoclide/coc.nvim
 "----------------------------------------------
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -351,7 +365,7 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 command! -nargs=0 Format :call CocAction('format')
 
 " Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
 " show docs on things with K
 function! s:show_documentation()
@@ -381,7 +395,7 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 "----------------------------------------------
-" Plugin: Syntastic
+" Plugin: vim-syntastic/syntastic
 "----------------------------------------------
 let g:syntastic_auto_loc_list=1
 
@@ -455,6 +469,9 @@ let g:go_term_enabled = 1
 " Disable vim-go :GoDef short cut (gd)
 " This is handled by LanguageClient [LC]
 let g:go_def_mapping_enabled = 0
+
+" Shortcut for GoFmt
+map <leader>gf :GoFmt<cr>
 
 " Mappings
 au FileType go nmap <F8> :GoMetaLinter<cr>

@@ -1,7 +1,7 @@
 {
   "BundleIdentifier": "xpui",
   "BundleType": "Application",
-  "BundleVersion": "1.1.33",
+  "BundleVersion": "1.1.34",
   "VendorIdentifier": "com.spotify",
   "UserInstallable": false,
   "AppDescription": {
@@ -107,5 +107,5 @@
   "SkipLanguageValidation": true,
   "SkipUnrequireValidation": true,
   "SpmApp": true,
-  "GitRevision": "ced9e0f51a"
+  "GitRevision": "ac68a2b309"
 }

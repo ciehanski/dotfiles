@@ -24,6 +24,7 @@ Plug 'christoomey/vim-tmux-navigator'          " Easy tmux navigation
 Plug 'machakann/vim-highlightedyank'           " Highlight yanked text
 Plug 'junegunn/fzf'                            " fzf vim bindings
 Plug '/usr/local/opt/fzf'                      " Local fzf binary via brew
+Plug 'skanehira/preview-markdown.vim'          " Markdown preview
 
 " Language support
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' } " Go syntax  highlighting & tooling
@@ -199,6 +200,15 @@ nnoremap <leader>h :split<cr>
 
 " Closing splits
 nnoremap <leader>q :close<cr>
+
+"----------------------------------------------
+" Plugin: skanehira/preview-markdown.vim
+"----------------------------------------------
+" let g:preview_markdown_auto_update = 1
+let g:preview_markdown_vertical = 1
+
+" Shortcut for preview 
+map <leader>md :PreviewMarkdown<cr>
 
 "----------------------------------------------
 " Plugin: luochen1990/rainbow

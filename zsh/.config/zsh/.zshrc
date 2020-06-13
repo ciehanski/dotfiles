@@ -15,26 +15,12 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 setopt HIST_VERIFY
-# setopt SHARE_HISTORY # share history between sessions ???
+setopt SHARE_HISTORY # share history between sessions ???
 setopt EXTENDED_HISTORY # add timestamps to history
 # setopt INC_APPEND_HISTORY # adds history incrementally and share it across sessions
 setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
 setopt HIST_REDUCE_BLANKS
 setopt HIST_IGNORE_SPACE
-
-# Basic auto-tab/complete
-autoload -U compinit
-zstyle ":completion:*" menu select
-zmodload zsh/complist
-compinit
-_comp_options+=(globaldots) # Include hidden files
-
-# Vim keys in auto complete menu
-bindkey -M menuselect "h" vi-backward-char
-bindkey -M menuselect "k" vi-up-line-or-history
-bindkey -M menuselect "l" vi-forward-char
-bindkey -M menuselect "j" vi-down-line-or-history
-bindkey -v "^?" backward-delete-char
 
 # Aliases
 alias ..="cd .." 
@@ -50,12 +36,19 @@ tk () { tmux kill-session -t $1 ; }
 # git aliases
 alias gs="git status"
 gdc () { git commit --dry-run -S -m $1 ; }
+# exa override ls
+# ls () { exa ; }
+# ll () { exa -l ; }
+# la () { exa -la ; }
+# rust
+alias rdb="RUST_TEST_THREADS=1 rust-gdb"
 
 # ZSH Options
 ZSH_THEME="powerlevel10k/powerlevel10k"
 DISABLE_AUTO_TITLE="true"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -71,7 +64,6 @@ plugins=(
   repo
   git
   git-extras
-  vi-mode
   web-search
   zsh-autosuggestions
   zsh-syntax-highlighting

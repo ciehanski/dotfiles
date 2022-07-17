@@ -14,7 +14,7 @@ export VISUAL="nvim"
 export GIT_EDITOR="nvim"
 
 # Set terminal
-export TERM="xterm-256color"
+# export TERM="xterm-256color"
 
 # FZF
 export FZF_BASE="/usr/local/opt/fzf"
@@ -33,4 +33,4 @@ export PATH="$HOME/.cabal/bin:${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/bin:$PA
 export PATH="$HOME/.local/bin:$PATH"
 
 # Setting PATH for Python 3.7
-export PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
+# export PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"

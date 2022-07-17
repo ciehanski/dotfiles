@@ -14,7 +14,7 @@ HISTFILE=~/.config/zsh/zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
-setopt HIST_VERIFY
+setopt HIST_VERIFY 
 setopt SHARE_HISTORY # share history between sessions ???
 setopt EXTENDED_HISTORY # add timestamps to history
 # setopt INC_APPEND_HISTORY # adds history incrementally and share it across sessions
@@ -22,24 +22,50 @@ setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
 setopt HIST_REDUCE_BLANKS
 setopt HIST_IGNORE_SPACE
 
-# Aliases
+### Aliases
 alias ..="cd .." 
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias vim="nvim"
 alias cls="clear"
+
+# exa override ls
+alias ls='exa'                                                         # ls
+alias l='exa -lbF --git'                                               # list, size, type, git
+alias ll='exa -lbGF --git'                                             # long list
+alias llm='exa -lbGd --git --sort=modified'                            # long list, modified date sort
+alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'  # all list
+alias lx='exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale' # all + extended list
+alias lS='exa -1'                                                      # one column, just names
+alias lt='exa --tree --level=2'                                        # tree
+
 # tmux
 alias tls="tmux ls"
 alias td="tmux detach"
 tn () { tmux new -s $1 ; }
 tk () { tmux kill-session -t $1 ; }
+
 # git aliases
 alias gs="git status"
 gdc () { git commit --dry-run -S -m $1 ; }
-# exa override ls
-# ls () { exa ; }
-# ll () { exa -l ; }
-# la () { exa -la ; }
+ct () { echo "^--^  ^------------^
+|     |
+|     +-> Summary in present tense.
+|
++-------> Type: build, chore, ci, docs, feat, fix, perf, refactor, revert, style, or test
+
+feat: new feature for the user, not a new feature for build script
+fix: a bug fix
+docs: changes to the documentation only
+style: formatting, white-space, etc; no production code change
+refactor: code change that does not fix a bug or add a feature, eg. renaming a variable
+perf: code change that improves performance
+test: adding missing tests, refactoring tests; no production code change
+build: change that affects the build system or external dependencies (example scopes: gulp, npm)
+ci: change to the CI configuration files and scripts
+chore: change that does not modify src or test files
+revert: reverts a previous commit" ; }
+
 # rust
 alias rdb="RUST_TEST_THREADS=1 rust-gdb"
 
@@ -68,9 +94,6 @@ plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
-
-# Source FZF
-source ~/.config/fzf/.fzf
 
 # Source oh-my-zsh
 source $ZSH/oh-my-zsh.sh

@@ -1,0 +1,21 @@
+[user]
+	name = Ryan Ciehanski
+	email = ryan@ciehanski.com
+	signingkey = 6E57ED70805E75DD
+[core]
+	excludesfile = /Users/Ryan/.config/git/gitignore_global
+	autocrlf = input
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[color]
+	ui = true
+[commit]
+	gpgsign = true
+	template = /Users/Ryan/.config/git/stCommitMsg
+[gpg]
+	program = /usr/local/bin/gpg
+[push]
+	followTags = true

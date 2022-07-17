@@ -17,7 +17,7 @@ Plug 'tpope/vim-fugitive'                      " Git goodies
 Plug 'sheerun/vim-polyglot'                    " Base language support
 Plug 'vim-airline/vim-airline'                 " Airline
 Plug 'jiangmiao/auto-pairs'                    " Auto-close brackets, etc.
-Plug 'tpope/vim-surround'                      " More tag closing, etc.
+" Plug 'tpope/vim-surround'                      " More tag closing, etc.
 Plug 'ryanoasis/vim-devicons'                  " Fancy icons
 Plug 'luochen1990/rainbow'                     " Rainbow brackets (cause I'm a sucker for colors)
 Plug 'christoomey/vim-tmux-navigator'          " Easy tmux navigation
@@ -32,10 +32,10 @@ Plug 'rust-lang/rust.vim'                      " Rust tooling
 Plug 'neovimhaskell/haskell-vim'               " Haskell syntax highlighting 
 Plug 'jaspervdj/stylish-haskell'               " Haskell code prettifier
 Plug 'alx741/vim-hindent'                      " Haskell indenter
+Plug 'pangloss/vim-javascript'                 " JavaScript goodies
 
 " Color Schemes
 Plug 'drewtempelmeyer/palenight.vim'
-Plug 'dracula/vim', { 'as': 'dracula' }
 
 call plug#end()
 
@@ -187,6 +187,9 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 
+" Close buffer gracefully with NerdTree
+nnoremap <leader>q :bp<cr>:bd #<cr>
+
 "----------------------------------------------
 " Remaps: Splits
 "----------------------------------------------
@@ -301,6 +304,9 @@ set nowritebackup
 
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
@@ -519,8 +525,7 @@ let g:go_echo_command_info = 1
 let g:go_auto_type_info = 1
 
 " Highlight variable uses
-let g:go_auto_sameids = 1
-
+let g:go_auto_sameids = 1 
 " Show type info in statusbar
 let g:go_auto_type_info = 1
 
@@ -549,3 +554,8 @@ let g:go_metalinter_enabled = [
 
 " Set whether the JSON tags should be snakecase or camelcase.
 let g:go_addtags_transform = "snakecase"
+
+" Set 4 space tabs go
+autocmd Filetype go setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+" Set 2 spaces HTML
+autocmd Filetype html setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2

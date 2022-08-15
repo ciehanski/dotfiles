@@ -30,14 +30,8 @@ alias vim="nvim"
 alias cls="clear"
 
 # exa override ls
-alias ls='exa'                                                         # ls
-alias l='exa -lbF --git'                                               # list, size, type, git
-alias ll='exa -lbGF --git'                                             # long list
-alias llm='exa -lbGd --git --sort=modified'                            # long list, modified date sort
-alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'  # all list
-alias lx='exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale' # all + extended list
-alias lS='exa -1'                                                      # one column, just names
-alias lt='exa --tree --level=2'                                        # tree
+# alias ls="exa"          # ls
+# alias la="exa -la"      # la
 
 # tmux
 alias tls="tmux ls"
@@ -68,6 +62,11 @@ revert: reverts a previous commit" ; }
 
 # rust
 alias rdb="RUST_TEST_THREADS=1 rust-gdb"
+
+# ruby
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+chruby ruby-3.1.2
 
 # ZSH Options
 ZSH_THEME="powerlevel10k/powerlevel10k"

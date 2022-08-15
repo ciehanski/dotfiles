@@ -13,6 +13,9 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 export GIT_EDITOR="nvim"
 
+# homebrew 
+export FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
 # Set terminal
 # export TERM="xterm-256color"
 
@@ -31,6 +34,10 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # haskell
 export PATH="$HOME/.cabal/bin:${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+
+# elixir
+export PATH="$PATH:/usr/local/bin/elixir"
+export PATH="$PATH:/usr/local/bin/mix"
 
 # Setting PATH for Python 3.7
 # export PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"

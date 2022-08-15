@@ -1,43 +1,48 @@
 "----------------------------------------------
-" Plugin management
+" Plugins: Installation Management
 "----------------------------------------------
 call plug#begin('~/.config/nvim/plugged')
 
-" Dependencies
-Plug 'ctrlpvim/ctrlp.vim'                      " CtrlP is installed to support tag finding in vim-go
-
-" General plugins
+" General Plugins
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " Better syntax highlighting and support
+Plug 'lukas-reineke/indent-blankline.nvim'     " Elegant line indents for functions, etc
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'} " CoC auto completion
 Plug 'vim-syntastic/syntastic'                 " Better syntax hax
-Plug 'mhinz/vim-signify'                       " Code dif
-Plug 'scrooloose/nerdtree'                     " File explorer
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Nerdtree Syntax Highlighting
-Plug 'Xuyuanp/nerdtree-git-plugin'             " Show files modified since last commit
+Plug 'airblade/vim-gitgutter'                  " Code dif
+Plug 'kyazdani42/nvim-tree.lua'                " File explorer
+Plug 'kyazdani42/nvim-web-devicons'            " Fancy icons
+Plug 'nvim-lualine/lualine.nvim'               " Statusline
+Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' } " Buffers
 Plug 'tpope/vim-fugitive'                      " Git goodies
-Plug 'sheerun/vim-polyglot'                    " Base language support
-Plug 'vim-airline/vim-airline'                 " Airline
-Plug 'jiangmiao/auto-pairs'                    " Auto-close brackets, etc.
-" Plug 'tpope/vim-surround'                      " More tag closing, etc.
-Plug 'ryanoasis/vim-devicons'                  " Fancy icons
+Plug 'windwp/nvim-autopairs'                   " Auto-close brackets, etc
+Plug 'tpope/vim-surround'                      " More tag closing, etc.
 Plug 'luochen1990/rainbow'                     " Rainbow brackets (cause I'm a sucker for colors)
-Plug 'christoomey/vim-tmux-navigator'          " Easy tmux navigation
-Plug 'machakann/vim-highlightedyank'           " Highlight yanked text
-Plug 'junegunn/fzf'                            " fzf vim bindings
-Plug '/usr/local/opt/fzf'                      " Local fzf binary via brew
-Plug 'skanehira/preview-markdown.vim'          " Markdown preview
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' } " Find files easily
+Plug 'nvim-lua/plenary.nvim'                   " Dep for Telescope
 
-" Language support
+" Language Tools
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' } " Go syntax  highlighting & tooling
 Plug 'rust-lang/rust.vim'                      " Rust tooling
 Plug 'neovimhaskell/haskell-vim'               " Haskell syntax highlighting 
 Plug 'jaspervdj/stylish-haskell'               " Haskell code prettifier
 Plug 'alx741/vim-hindent'                      " Haskell indenter
+Plug 'elixir-editors/vim-elixir'               " Elixir goodies
 Plug 'pangloss/vim-javascript'                 " JavaScript goodies
 
-" Color Schemes
+" Color Themes
 Plug 'drewtempelmeyer/palenight.vim'
 
 call plug#end()
+
+"----------------------------------------------
+" Lua Plugins: Installation Management
+"----------------------------------------------
+lua require('ciehanski.nvim-tree')
+lua require('ciehanski.treesitter')
+lua require('ciehanski.indent-blankline')
+lua require('ciehanski.lualine')
+lua require('ciehanski.bufferline')
+lua require('ciehanski.autopairs')
 
 "----------------------------------------------
 " General Settings
@@ -54,7 +59,7 @@ set cursorline                    " highlight the current line for the cursor
 set encoding=utf-8                " set utf8 encoding
 set expandtab                     " expands tabs to spaces
 set list                          " show trailing whitespace
-set listchars=tab:\|\ ,trail:▫
+set listchars=trail:▫
 set noswapfile                    " disable swapfile usage
 set number                        " show number ruler
 set relativenumber                " show relative numbers in the ruler
@@ -73,8 +78,9 @@ set scrolloff=3                   " set scroll offset by # of lines
 set nocompatible
 set inccommand=split              " enables interactive search and replace
 set showcmd
-set cmdheight=2                   " Set cmdheight 1u higher due to tmux statusline
+set cmdheight=1                   " Set cmdheight 1u higher due to tmux statusline
 set foldmethod=marker             " Fold on marks
+set laststatus=2                  " Always display statusline
 " set lazyredraw
 " set spell spelllang=en_us
 " set spellfile=~/.config/nvim/spell/en.utf-8.add
@@ -83,7 +89,7 @@ set foldmethod=marker             " Fold on marks
 set wildmenu                         " turn on the wild menu
 set wildmode=list:longest            " set command-line completion mode
 " wildmenu ignore nasties
-set wildignore=.hg\*,.svn\*,Thumbs.db,*.png,*.gif,*.jpg,*.jpeg,vendor 
+set wildignore=.hg\*,.svn\*,Thumbs.db,*.png,*.gif,*.jpg,*.jpeg,vendor,target
 
 " Enable filetype (tabs/spaces/indenting)
 filetype on
@@ -114,10 +120,13 @@ let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
 
 " Ruby bin
-let g:ruby_host_prog = '~/.rbenv/versions/2.6.3/bin/ruby'
+let g:ruby_host_prog = '~/.rubies/ruby-3.1.2/bin/ruby'
+
+" Disable perl provider since we don't use perl
+let g:loaded_perl_provider = 0
 
 "----------------------------------------------
-" Settings: Colors
+" Settings: Theme / Colors
 "----------------------------------------------
 " Support true color in terminal
 " Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -152,6 +161,13 @@ nnoremap N Nzzzv
 "----------------------------------------------
 " Remaps: Navigation
 "----------------------------------------------
+" Shortcut for nvim-tree
+nnoremap <C-n> :NvimTreeToggle<cr>
+
+" Move between buffers with arrow keys
+nnoremap <silent><Right> :bn<CR>
+nnoremap <silent><Left> :bp<CR>
+
 " Easier insert mode exit
 inoremap ii <esc>
 
@@ -171,10 +187,6 @@ inoremap <Right> <NOP>
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
-" Move between buffers with Shift + arrow key...
-nnoremap <Left> :bp<cr>
-nnoremap <Right> :bn<cr>
-
 " Fix some common typos
 cnoreabbrev W! w!
 cnoreabbrev Q! q!
@@ -186,9 +198,6 @@ cnoreabbrev WQ wq
 cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
-
-" Close buffer gracefully with NerdTree
-nnoremap <leader>q :bp<cr>:bd #<cr>
 
 "----------------------------------------------
 " Remaps: Splits
@@ -205,93 +214,19 @@ nnoremap <leader>h :split<cr>
 nnoremap <leader>q :close<cr>
 
 "----------------------------------------------
-" Plugin: skanehira/preview-markdown.vim
+" Highlights Yanked Text
 "----------------------------------------------
-" let g:preview_markdown_auto_update = 1
-let g:preview_markdown_vertical = 1
-
-" Shortcut for preview 
-map <leader>md :PreviewMarkdown<cr>
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=300 }
+augroup END
 
 "----------------------------------------------
 " Plugin: luochen1990/rainbow
 "----------------------------------------------
 " Set to 0 if you want to enable it later via :RainbowToggle
 let g:rainbow_active = 1
-
-"----------------------------------------------
-" Plugin: vim-airline/vim-airline
-"----------------------------------------------
-set laststatus=2
-
-" Enable top tabline.
-let g:airline#extensions#tabline#enabled = 1
-
-" Disable showing tabs in the tabline. This will ensure that the buffers are
-" what is shown in the tabline at all times.
-let g:airline#extensions#tabline#show_tabs = 1
-
-" Enable powerline fonts.
-let g:airline_powerline_fonts = 1
-
-" Set airline color theme
-let g:airline_theme='palenight'
-" let g:airline_theme='dracula'
-
-" Explicitly define some symbols that did not work well for me in Linux.
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_symbols.branch = ''
-let g:airline_symbols.maxlinenr = ''
-
-" Enable integration with CoC
-let g:airline#extensions#coc#enabled = 1
-
-"----------------------------------------------
-" Plugin: ctrlpvim/ctrlp.vim
-"----------------------------------------------
-" Note: We are not using CtrlP much in this configuration. But vim-go depend on
-" it to run GoDecls(Dir).
-" Disable the CtrlP mapping, since we want to use FZF instead for <c-p>.
-let g:ctrlp_map = ''
-
-"----------------------------------------------
-" Plugin: scrooloose/nerdtree
-"----------------------------------------------
-" Hide Press ? for help message
-let g:NERDTreeMinimalUI = v:true
-
-nnoremap <C-n> :NERDTreeToggle<cr>
-
-" Avoid window problem with NERDTree + :bd
-nnoremap \d :bp<cr>:bd #<cr>
-
-" Syntax Highlighting
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreePatternMatchHighlightFullName = 1
-
-" Files to ignore
-let NERDTreeIgnore = [
-    \ '\~$',
-    \ '\.pyc$',
-    \ '^\.DS_Store$',
-    \ '^node_modules$',
-    \ '^.ropeproject$',
-    \ '^__pycache__$'
-\]
-
-" Show hidden files by default.
-let NERDTreeShowHidden = 1
-
-" Allow NERDTree to change session root.
-let g:NERDTreeChDirMode = 2
-
-" Expand/Collapse
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
-
+ 
 "----------------------------------------------
 " Plugin: neoclide/coc.nvim
 "----------------------------------------------
@@ -392,6 +327,50 @@ function! s:show_documentation()
   endif
 endfunction
 
+" allow scrolling in help menu with up and
+" down arrows without leaving insert mode
+function! s:coc_float_scroll(amount) abort
+  let float = coc#util#get_float()
+  if !float | return '' | endif
+  let buf = nvim_win_get_buf(float)
+  let buf_height = nvim_buf_line_count(buf)
+  let win_height = nvim_win_get_height(float)
+  if buf_height < win_height | return '' | endif
+  let pos = nvim_win_get_cursor(float)
+  try
+    let last_amount = nvim_win_get_var(float, 'coc_float_scroll_last_amount')
+  catch
+    let last_amount = 0
+  endtry
+  if a:amount > 0
+    if pos[0] == 1
+      let pos[0] += a:amount + win_height - 2
+    elseif last_amount > 0
+      let pos[0] += a:amount
+    else
+      let pos[0] += a:amount + win_height - 3
+    endif
+    let pos[0] = pos[0] < buf_height ? pos[0] : buf_height
+  elseif a:amount < 0
+    if pos[0] == buf_height
+      let pos[0] += a:amount - win_height + 2
+    elseif last_amount < 0
+      let pos[0] += a:amount
+    else
+      let pos[0] += a:amount - win_height + 3
+    endif
+    let pos[0] = pos[0] > 1 ? pos[0] : 1
+  endif
+  call nvim_win_set_var(float, 'coc_float_scroll_last_amount', a:amount)
+  call nvim_win_set_cursor(float, pos)
+  return ''
+endfunction
+
+inoremap <silent><expr> <down> coc#float#has_scroll() ? coc#float#scroll(1) : "\<down>"
+inoremap <silent><expr> <up> coc#float#has_scroll() ? coc#float#scroll(-1) : "\<up>"
+vnoremap <silent><expr> <down> coc#float#has_scroll() ? coc#float#scroll(1) : "\<down>"
+vnoremap <silent><expr> <up> coc#float#has_scroll() ? coc#float#scroll(-1) : "\<up>"
+
 " Using CocList
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
@@ -414,6 +393,27 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " Plugin: vim-syntastic/syntastic
 "----------------------------------------------
 let g:syntastic_auto_loc_list=1
+
+function! SyntasticCheckHook(errors)
+    if !empty(a:errors)
+        let g:syntastic_loc_list_height = min([len(a:errors), 6])
+    endif
+endfunction
+
+"----------------------------------------------
+" Plugin: nvim-telescope/telescope.nvim
+"----------------------------------------------
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 "----------------------------------------------
 " Language: Rust

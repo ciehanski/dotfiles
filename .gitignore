@@ -2,3 +2,4 @@
 idea/
 newsboat/.newsboat/urls
 spicetify/
+.luarc.json

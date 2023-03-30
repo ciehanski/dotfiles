@@ -60,6 +60,8 @@ yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app="^Activity Monitor$" manage=off
 yabai -m rule --add app="^Home$" manage=off
 yabai -m rule --add app="^TextEdit$" manage=off
+yabai -m rule --add app="^Steam$" manage=off
+yabai -m rule --add app="^Shadow$" manage=off
 
 # browsing - 1
 yabai -m rule --add app="^Firefox$" space=^1
@@ -76,6 +78,7 @@ yabai -m rule --add app="^Messages$" space=^3
 yabai -m rule --add app="^FaceTime$" space=^3 manage=off
 yabai -m rule --add app="^Slack$" space=^3
 yabai -m rule --add app="^Mail$" space=^3
+yabai -m rule --add app="^Discord$" space=^3 manage=off
 
 # music / notes / photos - 4
 yabai -m rule --add app="^Notes$" space=^4
@@ -83,7 +86,7 @@ yabai -m rule --add app="^Music$" space=^4
 yabai -m rule --add app="^Spotify$" space=^4
 yabai -m rule --add app="^Photos$" space=^4
 
-# tools - 5 
+# tools - 5
 yabai -m rule --add app="^Arq$" space=^5
 yabai -m rule --add app="^App Store$" space=^5 manage=off
 yabai -m rule --add app="^Docker$" space=^5 manage=off

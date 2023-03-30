@@ -3,3 +3,5 @@ idea/
 newsboat/.newsboat/urls
 spicetify/
 .luarc.json
+nvim/.config/nvim/swp/
+nvim/.config/nvim/undo/

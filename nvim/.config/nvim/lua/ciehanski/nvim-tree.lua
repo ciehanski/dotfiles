@@ -1,6 +1,6 @@
 require("nvim-tree").setup {
   view = {
-    width = 31,
+    width = 32,
   },
   renderer = {
     indent_markers = {
@@ -17,12 +17,12 @@ require("nvim-tree").setup {
   },
   filters = {
     custom = {
-      "~$",
       ".pyc$",
-      '^.DS_Store$',
-      '^node_modules$',
-      '^.ropeproject$',
-      '^__pycache__$'
+      "^.git$",
+      "^.DS_Store$",
+      "^node_modules$",
+      "^target$",
+      "^__pycache__$"
     },
   },
 }

@@ -2,7 +2,7 @@
   "languageserver": {
     "golang": {
       "command": "gopls",
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "rootPatterns": ["go.mod", ".git/", ".hg/"],
       "filetypes": ["go"]
     },
     "haskell": {
@@ -26,14 +26,24 @@
     },
     "ccls": {
       "command": "ccls",
-      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
       "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
+      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
       "initializationOptions": {
-         "cache": {
-           "directory": "/tmp/ccls"
-         }
-       }
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
     }
   },
+  "Lua.diagnostics.globals": ["vim"],
+  "rust-analyzer.server.path": "~/.config/coc/extensions/coc-rust-analyzer-data/rust-analyzer",
+  "rust-analyzer.inlayHints.typeHints.enable": true,
+  "rust-analyzer.inlayHints.chainingHints.enable": true,
+  "rust-analyzer.inlayHints.renderColons": true,
+  "rust-analyzer.inlayHints.parameterHints.enable": false,
+  "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
+  "rust-analyzer.restartServerOnConfigChange": true,
+  "rust-analyzer.updates.checkOnStartup": true,
+  "rust-analyzer.checkOnSave": true,
   "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh"
 }

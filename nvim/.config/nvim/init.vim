@@ -1,13 +1,18 @@
+" nvim defaults to `compatible` when selecting a vimrc with the command-line
+" `-u` argument. Override this.
+if &compatible
+  set nocompatible
+endif
+
 "----------------------------------------------
 " Plugins: Installation Management
-"----------------------------------------------
+"---------------------------------------------- 
 call plug#begin('~/.config/nvim/plugged')
 
 " General Plugins
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " Better syntax highlighting and support
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } " Better syntax highlighting and support
 Plug 'lukas-reineke/indent-blankline.nvim'     " Elegant line indents for functions, etc
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'} " CoC auto completion
-Plug 'vim-syntastic/syntastic'                 " Better syntax hax
+Plug 'neoclide/coc.nvim', { 'branch': 'release' } " CoC auto completion
 Plug 'airblade/vim-gitgutter'                  " Code dif
 Plug 'kyazdani42/nvim-tree.lua'                " File explorer
 Plug 'kyazdani42/nvim-web-devicons'            " Fancy icons
@@ -17,17 +22,17 @@ Plug 'tpope/vim-fugitive'                      " Git goodies
 Plug 'windwp/nvim-autopairs'                   " Auto-close brackets, etc
 Plug 'tpope/vim-surround'                      " More tag closing, etc.
 Plug 'luochen1990/rainbow'                     " Rainbow brackets (cause I'm a sucker for colors)
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' } " Find files easily
-Plug 'nvim-lua/plenary.nvim'                   " Dep for Telescope
+Plug 'github/copilot.vim'                      " GitHub Copilot
+Plug 'folke/trouble.nvim'                      " Pretty diagnostics
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' } " Fuzzy Finder
+Plug 'nvim-lua/plenary.nvim'                   " Required by Telescope
 
 " Language Tools
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' } " Go syntax  highlighting & tooling
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " Go syntax highlighting & tooling
 Plug 'rust-lang/rust.vim'                      " Rust tooling
 Plug 'neovimhaskell/haskell-vim'               " Haskell syntax highlighting 
 Plug 'jaspervdj/stylish-haskell'               " Haskell code prettifier
-Plug 'alx741/vim-hindent'                      " Haskell indenter
 Plug 'elixir-editors/vim-elixir'               " Elixir goodies
-Plug 'pangloss/vim-javascript'                 " JavaScript goodies
 
 " Color Themes
 Plug 'drewtempelmeyer/palenight.vim'
@@ -43,68 +48,56 @@ lua require('ciehanski.indent-blankline')
 lua require('ciehanski.lualine')
 lua require('ciehanski.bufferline')
 lua require('ciehanski.autopairs')
+lua require('ciehanski.telescope')
 
 "----------------------------------------------
 " General Settings
 "----------------------------------------------
-set autoindent                    " take indent for new line from previous line
-set smartindent                   " enable smart indentation
-set cindent
+set laststatus=2                  " always display statusline
+set smartindent                   " enable smart indent on new line
+set cindent                       " use strict c-style indent
+set hidden                        " if hidden is not set, TextEdit might fail
 set autoread                      " reload file if the file changes on the disk
 set autowrite                     " write when switching buffers
-" set autowriteall                " write on :quit
 set clipboard=unnamedplus
 set colorcolumn=81                " highlight the 81st column as an indicator
 set cursorline                    " highlight the current line for the cursor
 set encoding=utf-8                " set utf8 encoding
 set expandtab                     " expands tabs to spaces
 set list                          " show trailing whitespace
-set listchars=trail:▫
-set noswapfile                    " disable swapfile usage
-set number                        " show number ruler
-set relativenumber                " show relative numbers in the ruler
+set listchars=trail:▫             " set trailing space char
+set directory=~/.dotfiles/nvim/.config/nvim/swp// " set swap directory
+set undodir=~/.dotfiles/nvim/.config/nvim/undo " permanent undo
+set undofile                      " permanent undo
 set ruler
-set wrap
+set relativenumber                " show relative numbers in the ruler
+set wrap                          " enforce wrap
 set tw=81                         " auto wrap lines that are longer than that
 set linebreak                     " avoid wrapping a line in the middle of a word
-set emoji                         " 😜
-set ttyfast                       " fast scrolling
+set ttyfast                       " fast connection indication
 set t_Co=256                      " 256 true color
 set ignorecase                    " ignore case when searching
 set smartcase                     " when searching try to be smart about cases
 set hlsearch                      " highlight search results
 set incsearch                     " makes search act like search in modern browsers
-set scrolloff=3                   " set scroll offset by # of lines
-set nocompatible
 set inccommand=split              " enables interactive search and replace
-set showcmd
-set cmdheight=1                   " Set cmdheight 1u higher due to tmux statusline
-set foldmethod=marker             " Fold on marks
-set laststatus=2                  " Always display statusline
-" set lazyredraw
-" set spell spelllang=en_us
-" set spellfile=~/.config/nvim/spell/en.utf-8.add
+set scrolloff=3                   " set scroll offset by # of lines
+set showcmd                       " show command output
+set cmdheight=1                   " set cmdheight 1u higher due to tmux statusline
+set mouse=a                       " enable mouse stuff
+set emoji                         " 😜
+
+" Indenting
+filetype plugin indent on         " enable c-styling and indents
 
 " wildmenu
-set wildmenu                         " turn on the wild menu
-set wildmode=list:longest            " set command-line completion mode
+set wildmenu                      " turn on the wild menu
+set wildmode=full                 " set command-line completion mode
 " wildmenu ignore nasties
 set wildignore=.hg\*,.svn\*,Thumbs.db,*.png,*.gif,*.jpg,*.jpeg,vendor,target
 
-" Enable filetype (tabs/spaces/indenting)
-filetype on
-filetype plugin on
-filetype indent on
-
-" Permanent undo
-set undodir=~/.config/nvim/.vimdid
-set undofile
-
-" Get syntax
+" Enable syntax highlighting
 syntax enable
-
-" Enable mouse stuff
-set mouse=a
 
 " Set the leader button
 let mapleader = ','
@@ -167,6 +160,7 @@ nnoremap <C-n> :NvimTreeToggle<cr>
 " Move between buffers with arrow keys
 nnoremap <silent><Right> :bn<CR>
 nnoremap <silent><Left> :bp<CR>
+nnoremap <silent><Down> :bd<CR>
 
 " Easier insert mode exit
 inoremap ii <esc>
@@ -177,7 +171,6 @@ vnoremap <C-c> <Esc>
 
 " Disable arrow keys
 noremap <Up> <NOP>
-noremap <Down> <NOP>
 inoremap <Up> <NOP>
 inoremap <Down> <NOP>
 inoremap <Left> <NOP>
@@ -226,194 +219,167 @@ augroup END
 "----------------------------------------------
 " Set to 0 if you want to enable it later via :RainbowToggle
 let g:rainbow_active = 1
- 
+
 "----------------------------------------------
 " Plugin: neoclide/coc.nvim
 "----------------------------------------------
-" if hidden is not set, TextEdit might fail.
-set hidden
-
-" Some servers have issues with backup files, see #649
+" Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
 
-" Smaller updatetime for CursorHold & CursorHoldI
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
 set updatetime=300
 
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-
-" always show signcolumns
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
 set signcolumn=yes
 
-" quick formatting mapping
-nnoremap <leader> F :call CocAction('format')<CR>
+" Coc inlay hints coloring
+hi CocInlayHint guibg=default guifg=Cyan ctermbg=0 ctermfg=11
 
 " Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
+" GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<CR>
 
-function! s:show_documentation()
+function! ShowDocumentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
+  elseif CocAction('hasProvider', 'hover')
+    if coc#float#has_float()
+      call coc#float#jump()
+      nnoremap <buffer> q <Cmd>close<CR>
+    else
+      call CocActionAsync('doHover')
+    endif
   else
-    call CocAction('doHover')
+    call feedkeys('K', 'in')
   endif
 endfunction
 
-" Highlight symbol under cursor on CursorHold
+" Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Remap for rename current word
+" Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
-" Remap for format selected region
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
 
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-vmap <leader>a  <Plug>(coc-codeaction-selected)
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-" Remap for do codeAction of current line
+" Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
+" Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
 
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call CocAction('fold', <f-args>)
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
 
-" show docs on things with K
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
 
-" allow scrolling in help menu with up and
-" down arrows without leaving insert mode
-function! s:coc_float_scroll(amount) abort
-  let float = coc#util#get_float()
-  if !float | return '' | endif
-  let buf = nvim_win_get_buf(float)
-  let buf_height = nvim_buf_line_count(buf)
-  let win_height = nvim_win_get_height(float)
-  if buf_height < win_height | return '' | endif
-  let pos = nvim_win_get_cursor(float)
-  try
-    let last_amount = nvim_win_get_var(float, 'coc_float_scroll_last_amount')
-  catch
-    let last_amount = 0
-  endtry
-  if a:amount > 0
-    if pos[0] == 1
-      let pos[0] += a:amount + win_height - 2
-    elseif last_amount > 0
-      let pos[0] += a:amount
-    else
-      let pos[0] += a:amount + win_height - 3
-    endif
-    let pos[0] = pos[0] < buf_height ? pos[0] : buf_height
-  elseif a:amount < 0
-    if pos[0] == buf_height
-      let pos[0] += a:amount - win_height + 2
-    elseif last_amount < 0
-      let pos[0] += a:amount
-    else
-      let pos[0] += a:amount - win_height + 3
-    endif
-    let pos[0] = pos[0] > 1 ? pos[0] : 1
-  endif
-  call nvim_win_set_var(float, 'coc_float_scroll_last_amount', a:amount)
-  call nvim_win_set_cursor(float, pos)
-  return ''
-endfunction
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
 
-inoremap <silent><expr> <down> coc#float#has_scroll() ? coc#float#scroll(1) : "\<down>"
-inoremap <silent><expr> <up> coc#float#has_scroll() ? coc#float#scroll(-1) : "\<up>"
-vnoremap <silent><expr> <down> coc#float#has_scroll() ? coc#float#scroll(1) : "\<down>"
-vnoremap <silent><expr> <up> coc#float#has_scroll() ? coc#float#scroll(-1) : "\<up>"
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
 
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 "----------------------------------------------
-" Plugin: vim-syntastic/syntastic
+" Plugin: folke/trouble.nvim
 "----------------------------------------------
-let g:syntastic_auto_loc_list=1
-
-function! SyntasticCheckHook(errors)
-    if !empty(a:errors)
-        let g:syntastic_loc_list_height = min([len(a:errors), 6])
-    endif
-endfunction
+nnoremap <silent> <space>d <cmd>call coc#rpc#request('fillDiagnostics', [bufnr('%')])<CR><cmd>Trouble loclist<CR>
 
 "----------------------------------------------
-" Plugin: nvim-telescope/telescope.nvim
+" Plugin: github/copilot
 "----------------------------------------------
-" Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+let g:copilot_no_tab_map = v:true
+imap <silent><script><expr> <space><tab> copilot#Accept("\<CR>")
+inoremap <silent> <space>w <Plug>(copilot-next)
+inoremap <silent> <space>q <Plug>(copilot-previous)
 
-" Using Lua functions
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+"----------------------------------------------
+" Plugin: telescope.nvim
+"----------------------------------------------
+nnoremap <space>ff <cmd>Telescope find_files hidden=true<cr>
+nnoremap <space>fg <cmd>Telescope live_grep<cr>
+nnoremap <space>fb <cmd>Telescope buffers<cr>
+nnoremap <space>fh <cmd>Telescope help_tags<cr>
 
 "----------------------------------------------
 " Language: Rust
@@ -423,17 +389,6 @@ let g:rustfmt_autosave = 1
 "----------------------------------------------
 " Language: Haskell
 "----------------------------------------------
-" let g:haskell_indent_if = 3
-" let g:haskell_indent_case = 2
-" let g:haskell_indent_let = 4
-" let g:haskell_indent_where = 6
-" let g:haskell_indent_before_where = 2
-" let g:haskell_indent_after_bare_where = 2
-" let g:haskell_indent_do = 3
-" let g:haskell_indent_in = 1
-" let g:haskell_indent_guard = 2
-" let g:haskell_indent_case_alternative = 1
-
 " Align 'then' two spaces after 'if'
 let g:haskell_indent_if = 2
 " Indent 'where' block two spaces under previous body
@@ -499,7 +454,6 @@ au Filetype go nmap <leader>gah <Plug>(go-alternate-split)
 au Filetype go nmap <leader>gav <Plug>(go-alternate-vertical)
 au FileType go nmap <leader>gt :GoDeclsDir<cr>
 au FileType go nmap <leader>gc <Plug>(go-coverage-toggle)
-" au FileType go nmap <leader>gd <Plug>(go-def) " handled by vim-go
 au FileType go nmap <leader>gdv <Plug>(go-def-vertical)
 au FileType go nmap <leader>gdh <Plug>(go-def-split)
 au FileType go nmap <leader>gD <Plug>(go-doc)
@@ -507,16 +461,6 @@ au FileType go nmap <leader>gDv <Plug>(go-doc-vertical)
 
 " Run goimports when running gofmt
 let g:go_fmt_command = "goimports"
-
-" Enable syntax highlighting per default
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_extra_types = 1
 
 " Show the progress when running :GoCoverage
 let g:go_echo_command_info = 1
@@ -555,7 +499,13 @@ let g:go_metalinter_enabled = [
 " Set whether the JSON tags should be snakecase or camelcase.
 let g:go_addtags_transform = "snakecase"
 
-" Set 4 space tabs go
-autocmd Filetype go setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 " Set 2 spaces HTML
 autocmd Filetype html setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+" Set 2 spaces lua
+autocmd Filetype lua setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+" Set 2 spaces css 
+autocmd Filetype css setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+" Set 2 spaces scss 
+autocmd Filetype scss setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+" Set 4 spaces asm 
+autocmd Filetype asm setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4

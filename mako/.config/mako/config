@@ -1,0 +1,23 @@
+layer=top
+anchor=top-right
+font=RecMonoLinear Nerd Font 10
+background-color=#171b20
+text-color=#b6beca
+width=370
+margin=5,5,5
+padding=10
+border-size=2
+border-color=#262626
+progress-color=over #262626ff
+border-radius=5
+default-timeout=180
+group-by=app-name
+
+[grouped]
+format=<b>%s</b>\n%b
+
+[mode=do-not-disturb]
+invisible=1
+
+[urgency="high"]
+background-color=#f50057

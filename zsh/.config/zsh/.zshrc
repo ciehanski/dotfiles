@@ -23,15 +23,24 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_IGNORE_SPACE
 
 ### Aliases
-alias ..="cd .." 
+alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias vim="nvim"
+alias NVIM="nvim"
 alias cls="clear"
+alias mv="mv -v"
+alias cp="cp -v"
 
 # exa override ls
-# alias ls="exa"          # ls
-# alias la="exa -la"      # la
+alias ls="exa" # ls
+alias ll='exa -lbF --git' # list, size, type, git
+alias llm='exa -lbGd --git --sort=modified' # long list, modified date sort
+alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale' # all list
+alias lx='exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale' # all + extended list
+alias lS='exa -1' # one column, just names
+alias lt='exa --tree --level=2' # tree
+
 
 # tmux
 alias tls="tmux ls"
@@ -64,9 +73,9 @@ revert: reverts a previous commit" ; }
 alias rdb="RUST_TEST_THREADS=1 rust-gdb"
 
 # ruby
-source /usr/local/share/chruby/chruby.sh
-source /usr/local/share/chruby/auto.sh
-chruby ruby-3.1.2
+# source /usr/local/share/chruby/chruby.sh
+# source /usr/local/share/chruby/auto.sh
+# chruby ruby-3.1.2
 
 # ZSH Options
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -79,12 +88,9 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 plugins=(
-  brew
   colored-man-pages
   colorize
   common-aliases
-  golang
-  fzf
   tmux
   repo
   git

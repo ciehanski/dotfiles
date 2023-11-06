@@ -20,4 +20,4 @@ program = /usr/bin/gpg
 [push]
 followTags = true
 [init]
-defaultBranch = master
+defaultBranch = main 

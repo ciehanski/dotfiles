@@ -2,11 +2,11 @@
     "layer": "top",
     "position": "top",
     "mod": "dock",
-    "output": "eDP-1",
+    "output": ["eDP-1", "DP-2"],
     "exclusive": true,
     "passtrough": false,
     "gtk-layer-shell": true,
-    "height": 48,
+    "height": 50,
     "modules-left": [
         "pulseaudio",
         "pulseaudio#microphone",

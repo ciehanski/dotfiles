@@ -8,17 +8,15 @@ export VISUAL="nvim"
 export GIT_EDITOR="nvim"
 
 # Go env
-export GOPATH="$HOME/go"
-export GOBIN="$HOME/go/bin"
+export GOPATH="/code/go"
+export GOBIN="/code/go/bin"
 export PATH=$PATH:$GOPATH/bin
 
-# cargo
-export PATH="$HOME/.cargo/bin:$PATH"
+# cargo / rustup
+export CARGO_HOME="/code/.cargo"
+export PATH="$CARGO_HOME/bin:$PATH"
+export RUSTUP_HOME="/code/.rustup"
 
 # haskell
-export PATH="$HOME/.cabal/bin:${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-
-# elixir
-export PATH="$PATH:/usr/local/bin/elixir"
-export PATH="$PATH:/usr/local/bin/mix"
+export PATH="/code/.cabal/bin:${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/bin:$PATH"
+export PATH="/code/.local/bin:$PATH"

@@ -11,28 +11,24 @@ call plug#begin('~/.config/nvim/plugged')
 
 " General Plugins
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' } " Better syntax highlighting and support
-Plug 'lukas-reineke/indent-blankline.nvim'     " Elegant line indents for functions, etc
-Plug 'neoclide/coc.nvim', { 'branch': 'release' } " CoC auto completion
+Plug 'lukas-reineke/indent-blankline.nvim', { 'tag': 'v2.20.8' }  " Elegant line indents for functions, etc
+Plug 'neoclide/coc.nvim', { 'commit': '3dc6153' } " CoC auto completion
 Plug 'airblade/vim-gitgutter'                  " Code dif
 Plug 'kyazdani42/nvim-tree.lua'                " File explorer
 Plug 'kyazdani42/nvim-web-devicons'            " Fancy icons
 Plug 'nvim-lualine/lualine.nvim'               " Statusline
-Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' } " Buffers
+Plug 'akinsho/bufferline.nvim', { 'tag': 'v4.*' } " Buffers
 Plug 'tpope/vim-fugitive'                      " Git goodies
 Plug 'windwp/nvim-autopairs'                   " Auto-close brackets, etc
 Plug 'tpope/vim-surround'                      " More tag closing, etc.
 Plug 'luochen1990/rainbow'                     " Rainbow brackets (cause I'm a sucker for colors)
 Plug 'github/copilot.vim'                      " GitHub Copilot
 Plug 'folke/trouble.nvim'                      " Pretty diagnostics
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' } " Fuzzy Finder
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.2' } " Fuzzy Finder
 Plug 'nvim-lua/plenary.nvim'                   " Required by Telescope
-
-" Language Tools
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } " Go syntax highlighting & tooling
-Plug 'rust-lang/rust.vim'                      " Rust tooling
-Plug 'neovimhaskell/haskell-vim'               " Haskell syntax highlighting 
-Plug 'jaspervdj/stylish-haskell'               " Haskell code prettifier
-Plug 'elixir-editors/vim-elixir'               " Elixir goodies
+Plug 'rmagatti/auto-session'                   " Automatic nvim sessions
+Plug 'folke/trouble.nvim'                      " Pretty diagnostics
+"Plug 'sidebar-nvim/sidebar.nvim'               " Symbols Sidebar
 
 " Color Themes
 Plug 'drewtempelmeyer/palenight.vim'
@@ -49,13 +45,16 @@ lua require('ciehanski.lualine')
 lua require('ciehanski.bufferline')
 lua require('ciehanski.autopairs')
 lua require('ciehanski.telescope')
+lua require('ciehanski.auto-session')
+lua require('ciehanski.trouble')
+"lua require('ciehanski.symbols-sidebar')
 
 "----------------------------------------------
 " General Settings
 "----------------------------------------------
 set laststatus=2                  " always display statusline
-set smartindent                   " enable smart indent on new line
-set cindent                       " use strict c-style indent
+"set smartindent                   " enable smart indent on new line
+"set cindent                       " use strict c-style indent
 set hidden                        " if hidden is not set, TextEdit might fail
 set autoread                      " reload file if the file changes on the disk
 set autowrite                     " write when switching buffers
@@ -64,7 +63,7 @@ set colorcolumn=81                " highlight the 81st column as an indicator
 set cursorline                    " highlight the current line for the cursor
 set encoding=utf-8                " set utf8 encoding
 set expandtab                     " expands tabs to spaces
-set list                          " show trailing whitespace
+"set list                          " show trailing whitespace
 set listchars=trail:▫             " set trailing space char
 set directory=~/.dotfiles/nvim/.config/nvim/swp// " set swap directory
 set undodir=~/.dotfiles/nvim/.config/nvim/undo " permanent undo
@@ -82,13 +81,13 @@ set hlsearch                      " highlight search results
 set incsearch                     " makes search act like search in modern browsers
 set inccommand=split              " enables interactive search and replace
 set scrolloff=3                   " set scroll offset by # of lines
-set showcmd                       " show command output
+set noshowcmd                       " show command output
 set cmdheight=1                   " set cmdheight 1u higher due to tmux statusline
 set mouse=a                       " enable mouse stuff
 set emoji                         " 😜
 
 " Indenting
-filetype plugin indent on         " enable c-styling and indents
+filetype plugin indent on         " enable indents
 
 " wildmenu
 set wildmenu                      " turn on the wild menu
@@ -113,7 +112,8 @@ let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
 
 " Ruby bin
-let g:ruby_host_prog = '~/.rubies/ruby-3.1.2/bin/ruby'
+" let g:ruby_host_prog = '~/.rubies/ruby-3.1.2/bin/ruby'
+let g:loaded_ruby_provider = 0
 
 " Disable perl provider since we don't use perl
 let g:loaded_perl_provider = 0
@@ -159,7 +159,11 @@ nnoremap <C-n> :NvimTreeToggle<cr>
 
 " Move between buffers with arrow keys
 nnoremap <silent><Right> :bn<CR>
+nnoremap <silent><Tab> :bn<CR>
+" nnoremap <silent><Shift>+K :bn<CR>
 nnoremap <silent><Left> :bp<CR>
+nnoremap <silent><S-Tab> :bp<CR>
+" nnoremap <silent><Shift>+J :bp<CR>
 nnoremap <silent><Down> :bd<CR>
 
 " Easier insert mode exit
@@ -363,7 +367,8 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 "----------------------------------------------
 " Plugin: folke/trouble.nvim
 "----------------------------------------------
-nnoremap <silent> <space>d <cmd>call coc#rpc#request('fillDiagnostics', [bufnr('%')])<CR><cmd>Trouble loclist<CR>
+nnoremap <silent> <space>e <cmd>call coc#rpc#request('fillDiagnostics', [bufnr('%')])<CR><cmd>Trouble loclist<CR>
+nnoremap <silent> <space>d <cmd>TroubleToggle<cr>
 
 "----------------------------------------------
 " Plugin: github/copilot
@@ -428,6 +433,9 @@ augroup END
 "----------------------------------------------
 " Language: Golang
 "----------------------------------------------
+" Add missing imports on save
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+
 let g:go_def_mode = "gopls"
 let g:go_info_mode = "gopls"
 
@@ -443,21 +451,6 @@ let g:go_def_mapping_enabled = 0
 
 " Shortcut for GoFmt
 map <leader>gf :GoFmt<cr>
-
-" Mappings
-au FileType go nmap <F8> :GoMetaLinter<cr>
-au FileType go nmap <F9> :GoCoverageToggle -short<cr>
-au FileType go nmap <F10> :GoTest -short<cr>
-au FileType go nmap <F12> <Plug>(go-def)
-au Filetype go nmap <leader>ga <Plug>(go-alternate-edit)
-au Filetype go nmap <leader>gah <Plug>(go-alternate-split)
-au Filetype go nmap <leader>gav <Plug>(go-alternate-vertical)
-au FileType go nmap <leader>gt :GoDeclsDir<cr>
-au FileType go nmap <leader>gc <Plug>(go-coverage-toggle)
-au FileType go nmap <leader>gdv <Plug>(go-def-vertical)
-au FileType go nmap <leader>gdh <Plug>(go-def-split)
-au FileType go nmap <leader>gD <Plug>(go-doc)
-au FileType go nmap <leader>gDv <Plug>(go-doc-vertical)
 
 " Run goimports when running gofmt
 let g:go_fmt_command = "goimports"
@@ -498,14 +491,3 @@ let g:go_metalinter_enabled = [
 
 " Set whether the JSON tags should be snakecase or camelcase.
 let g:go_addtags_transform = "snakecase"
-
-" Set 2 spaces HTML
-autocmd Filetype html setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
-" Set 2 spaces lua
-autocmd Filetype lua setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
-" Set 2 spaces css 
-autocmd Filetype css setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
-" Set 2 spaces scss 
-autocmd Filetype scss setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
-" Set 4 spaces asm 
-autocmd Filetype asm setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4

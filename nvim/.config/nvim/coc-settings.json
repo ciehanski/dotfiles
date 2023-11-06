@@ -1,8 +1,15 @@
 {
   "languageserver": {
+    "rust": {
+      "command": "rust-analyzer",
+      "trace.server": "verbose",
+      "filetypes": ["rs"],
+      "rootPatterns": ["Cargo.toml", ".git/"],
+      "progressOnInitialization": true
+    },
     "golang": {
       "command": "gopls",
-      "rootPatterns": ["go.mod", ".git/", ".hg/"],
+      "rootPatterns": ["go.mod", ".git/"],
       "filetypes": ["go"]
     },
     "haskell": {
@@ -24,26 +31,43 @@
         }
       }
     },
-    "ccls": {
-      "command": "ccls",
-      "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
-      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
-      "initializationOptions": {
-        "cache": {
-          "directory": "/tmp/ccls"
-        }
-      }
-    }
+  },
+  "suggest.completionItemKindLabels": {
+    "method": "  ",
+    "function": "  ",
+    "variable": "[]",
+    "field": "  ",
+    "typeParameter": "<>",
+    "constant": "  ",
+    "class": " פּ ",
+    "interface": " 蘒",
+    "struct": "  ",
+    "event": "  ",
+    "operator": "  ",
+    "module": "  ",
+    "property": "  ",
+    "enum": " 練",
+    "reference": "  ",
+    "keyword": "  ",
+    "file": "  ",
+    "folder": " ﱮ ",
+    "color": "  ",
+    "unit": " 塞 ",
+    "snippet": "  ",
+    "text": "  ",
+    "constructor": "  ",
+    "value": "  ",
+    "enumMember": "  "
   },
   "Lua.diagnostics.globals": ["vim"],
-  "rust-analyzer.server.path": "~/.config/coc/extensions/coc-rust-analyzer-data/rust-analyzer",
+  "rust-analyzer.enable": true,
+  "rust-analyzer.server.path": "/code/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rust-analyzer",
   "rust-analyzer.inlayHints.typeHints.enable": true,
   "rust-analyzer.inlayHints.chainingHints.enable": true,
-  "rust-analyzer.inlayHints.renderColons": true,
+  "rust-analyzer.inlayHints.renderColons": false,
   "rust-analyzer.inlayHints.parameterHints.enable": false,
   "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
   "rust-analyzer.restartServerOnConfigChange": true,
-  "rust-analyzer.updates.checkOnStartup": true,
+  "rust-analyzer.updates.checkOnStartup": false,
   "rust-analyzer.checkOnSave": true,
-  "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh"
 }

@@ -1,73 +1,89 @@
 {
-  "languageserver": {
-    "rust": {
-      "command": "rust-analyzer",
-      "trace.server": "verbose",
-      "filetypes": ["rs"],
-      "rootPatterns": ["Cargo.toml", ".git/"],
-      "progressOnInitialization": true
-    },
-    "golang": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod", ".git/"],
-      "filetypes": ["go"]
-    },
-    "haskell": {
-      "command": "hie-wrapper",
-      "args": ["--lsp"],
-      "rootPatterns": [
-        "stack.yaml",
-        "cabal.config",
-        "package.yaml"
-      ],
-      "filetypes": [
-        "hs",
-        "lhs",
-        "haskell"
-      ],
-      "initializationOptions": {
-        "languageServerHaskell": {
-          "hlintOn": true
-        }
-      }
-    },
-  },
-  "suggest.completionItemKindLabels": {
-    "method": "  ",
-    "function": "  ",
-    "variable": "[]",
-    "field": "  ",
-    "typeParameter": "<>",
-    "constant": "  ",
-    "class": " פּ ",
-    "interface": " 蘒",
-    "struct": "  ",
-    "event": "  ",
-    "operator": "  ",
-    "module": "  ",
-    "property": "  ",
-    "enum": " 練",
-    "reference": "  ",
-    "keyword": "  ",
-    "file": "  ",
-    "folder": " ﱮ ",
-    "color": "  ",
-    "unit": " 塞 ",
-    "snippet": "  ",
-    "text": "  ",
-    "constructor": "  ",
-    "value": "  ",
-    "enumMember": "  "
-  },
-  "Lua.diagnostics.globals": ["vim"],
-  "rust-analyzer.enable": true,
-  "rust-analyzer.server.path": "/code/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rust-analyzer",
-  "rust-analyzer.inlayHints.typeHints.enable": true,
-  "rust-analyzer.inlayHints.chainingHints.enable": true,
-  "rust-analyzer.inlayHints.renderColons": false,
-  "rust-analyzer.inlayHints.parameterHints.enable": false,
-  "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
-  "rust-analyzer.restartServerOnConfigChange": true,
-  "rust-analyzer.updates.checkOnStartup": false,
-  "rust-analyzer.checkOnSave": true,
+        "languageserver": {
+                "rust": {
+                        "command": "rust-analyzer",
+                        "trace.server": "verbose",
+                        "filetypes": [
+                                "rs"
+                        ],
+                        "rootPatterns": [
+                                "Cargo.toml",
+                                "Cargo.lock"
+                        ],
+                        "progressOnInitialization": true
+                },
+                "golang": {
+                        "command": "gopls",
+                        "rootPatterns": [
+                                "go.mod",
+                                "go.sum"
+                        ],
+                        "filetypes": [
+                                "go"
+                        ]
+                },
+                "haskell": {
+                        "command": "hie-wrapper",
+                        "args": [
+                                "--lsp"
+                        ],
+                        "rootPatterns": [
+                                "stack.yaml",
+                                "cabal.config",
+                                "package.yaml"
+                        ],
+                        "filetypes": [
+                                "hs",
+                                "lhs",
+                                "haskell"
+                        ],
+                        "initializationOptions": {
+                                "languageServerHaskell": {
+                                        "hlintOn": true
+                                }
+                        }
+                },
+        },
+        "suggest.completionItemKindLabels": {
+                "method": "  ",
+                "function": " 𝑓 ",
+                "variable": "[]",
+                "field": "  ",
+                "typeParameter": "<>",
+                "constant": "  ",
+                "class": " פּ ",
+                "interface": " 蘒",
+                "struct": "  ",
+                "event": "  ",
+                "operator": "  ",
+                "module": "  ",
+                "property": "  ",
+                "enum": " 練",
+                "reference": "  ",
+                "keyword": "  ",
+                "file": "  ",
+                "folder": " ﱮ ",
+                "color": "  ",
+                "unit": " 塞 ",
+                "snippet": "  ",
+                "text": "  ",
+                "constructor": "  ",
+                "value": "  ",
+                "enumMember": "  "
+        },
+        "coc.preferences.formatOnSave": false,
+        "Lua.diagnostics.globals": [
+                "vim"
+        ],
+        "rust-analyzer.enable": true,
+        "rust-analyzer.server.path": "/code/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rust-analyzer",
+        "rust-analyzer.inlayHints.typeHints.enable": true,
+        "rust-analyzer.inlayHints.chainingHints.enable": true,
+        "rust-analyzer.inlayHints.renderColons": false,
+        "rust-analyzer.inlayHints.parameterHints.enable": false,
+        "rust-analyzer.typing.autoClosingAngleBrackets.enable": true,
+        "rust-analyzer.restartServerOnConfigChange": true,
+        "rust-analyzer.updates.checkOnStartup": false,
+        "rust-analyzer.checkOnSave": true,
+        "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/16.0.2/clangd_16.0.2/bin/clangd",
 }

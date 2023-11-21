@@ -3,7 +3,7 @@
     border-radius: 0;
     font-family: Cartograph CF Nerd Font, monospace;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 15px;
     min-height: 0;
 }
 
@@ -27,28 +27,28 @@ tooltip {
 }
 
 #workspaces button.active {
-    /* color: #a6adc8; */
     color: #c792ea;
 }
 
 #workspaces button.focused {
-    color: #a6adc8;
+    color: #c792ea;
     background: #eba0ac;
     border-radius: 10px;
 }
 
 #workspaces button.urgent {
     color: #11111b;
-    background: #a6e3a1;
+    background: #db361d;
     border-radius: 10px;
 }
 
 #workspaces button:hover {
+    color: #c792ea;
     background: #11111b;
-    color: #cdd6f4;
     border-radius: 10px;
 }
 
+#custom-vpn,
 #custom-spotify,
 #window,
 #clock,
@@ -75,16 +75,10 @@ tooltip {
     padding-left: 5px;
 }
 
-#window {
-    border-radius: 10px;
-    margin-left: 60px;
-    margin-right: 60px;
-}
-
 #clock {
     color: #fab387;
     border-radius: 10px 0px 0px 10px;
-    margin-left: 5px;
+    margin-left: 0px;
     border-right: 0px;
 }
 
@@ -94,10 +88,17 @@ tooltip {
     margin-right: 10px;
 }
 
+#window {
+    color: #1e1e2e;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+#custom-vpn,
 #custom-spotify,
 #memory,
-#tray,
-#cpu {
+#cpu,
+#tray {
     border-radius: 10px;
     margin-right: 10px;
 }
@@ -110,7 +111,7 @@ tooltip {
 
 #pulseaudio.microphone {
     color: #cba6f7;
-    margin-right: 5px;
+    margin-right: 10px;
     border-radius: 0 10px 10px 0;
 }
 

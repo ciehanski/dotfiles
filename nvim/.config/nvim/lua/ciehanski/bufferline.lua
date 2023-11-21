@@ -3,6 +3,15 @@ require('bufferline').setup {
     fill = {
       bg = "#292D3E"
     },
+    modified = {
+      fg = "#C792EA",
+    },
+    modified_visible = {
+      fg = "#C792EA",
+    },
+    modified_selected = {
+      fg = "#C792EA",
+    },
   },
   options = {
     mode = 'buffers',

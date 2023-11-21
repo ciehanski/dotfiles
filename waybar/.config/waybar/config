@@ -12,19 +12,30 @@
         "pulseaudio#microphone",
         "cpu",
         "memory",
-    ],
-    "modules-center": ["wlr/workspaces"],
-    "modules-right": [
         "custom/spotify",
+    ],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": [
+        "custom/vpn",
         "network",
         "tray",
         "battery",
         "clock",
     ],
     "hyprland/window": {
-        "format": "{}"
+        "format": "{}",
+        "rewrite": {
+            "(.*)Mozilla Firefox": "|  󰈹 Firefox",
+            "(.*)Discord": "|  󰙯 Discord",
+              	  "(.*)Spotify": "|   Spotify",
+            "(.*)Steam": "|  󰓓 Steam",
+            "(.*)Dolphin": "|  󰉋 Dolphin",
+            "(.*)ciehanski@rypad(.*)": "|   Alacritty",
+            "nvim(.*)": "|   Neovim",
+            "vim(.*)": "|   Vim",
+        }
     },
-    "wlr/workspaces": {
+    "hyprland/workspaces": {
         "on-scroll-up": "hyprctl dispatch workspace e+1",
         "on-scroll-down": "hyprctl dispatch workspace e-1",
         "all-outputs": true,
@@ -38,6 +49,8 @@
             "5": "",
             "6": "",
             "7": "",
+            "8": "",
+            "9": "",
             "urgent": "",
             "active": "",
             "default": ""
@@ -102,9 +115,9 @@
     },
     "custom/spotify": {
         "exec": "playerctl -p spotify -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
-        "format": "{}",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "Stopped ",
+        "format": " {}",
+        "format-disconnected": " Disconnected",
+        "format-stopped": " Stopped",
         //"state-icons": {
         //  "paused": "",
         //  "playing": ""
@@ -114,5 +127,12 @@
         "on-click": "playerctl -p spotify play-pause",
         "on-scroll-up": "playerctl -p spotify next",
         "on-scroll-down": "playerctl -p spotify previous"
+    },
+    "custom/vpn": {
+        "format": " VPN",
+        "exec": "echo '{\"class\": \"connected\"}'",
+        "exec-if": "test -d /proc/sys/net/ipv4/conf/wg-mullvad",
+        "return-type": "json",
+        "interval": 5
     }
 }

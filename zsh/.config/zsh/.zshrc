@@ -31,15 +31,16 @@ alias NVIM="nvim"
 alias cls="clear"
 alias mv="mv -v"
 alias cp="cp -v"
+alias logout="hyprctl dispatch exit"
 
 # exa override ls
-alias ls="exa" # ls
-alias ll='exa -lbF --git' # list, size, type, git
-alias llm='exa -lbGd --git --sort=modified' # long list, modified date sort
-alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale' # all list
-alias lx='exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale' # all + extended list
-alias lS='exa -1' # one column, just names
-alias lt='exa --tree --level=2' # tree
+alias ls="eza" # ls
+alias ll="eza -lbF --git" # list, size, type, git
+alias llm="eza -lbGd --git --sort=modified" # long list, modified date sort
+alias la="eza -lbhHigUmuSa --time-style=long-iso --git --color-scale" # all list
+alias lx="eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale" # all + extended list
+alias lS="eza -1" # one column, just names
+alias lt="eza --tree --level=2" # tree
 
 
 # tmux
@@ -69,13 +70,12 @@ ci: change to the CI configuration files and scripts
 chore: change that does not modify src or test files
 revert: reverts a previous commit" ; }
 
-# rust
-alias rdb="RUST_TEST_THREADS=1 rust-gdb"
-
-# ruby
-# source /usr/local/share/chruby/chruby.sh
-# source /usr/local/share/chruby/auto.sh
-# chruby ruby-3.1.2
+# pnpm
+export PNPM_HOME="/home/ciehanski/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
 
 # ZSH Options
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -91,11 +91,13 @@ plugins=(
   colored-man-pages
   colorize
   common-aliases
+  docker
+  docker-compose
+  history
   tmux
   repo
   git
   git-extras
-  web-search
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
@@ -106,11 +108,3 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # Possibly change to $ZDOTDIR/.p10k.zsh
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
-
-# pnpm
-export PNPM_HOME="/home/ciehanski/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end

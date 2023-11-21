@@ -10,7 +10,7 @@ border-size=3
 border-color=#262626
 progress-color=over #262626ff
 border-radius=5
-default-timeout=45000
+default-timeout=6000
 ignore-timeout=1
 group-by=app-name
 
@@ -22,3 +22,6 @@ invisible=1
 
 [urgency="high"]
 background-color=#f50057
+
+[desktop-entry="com.spotify.Client"]
+invisible=1
